@@ -1,3 +1,5 @@
+from math import *
+
 '''-----------------------------------------------------------------------------
 Complex Number Module
 Made to represent complex numbers and their interactions. Contains a single
@@ -25,18 +27,56 @@ compliment
 
 
 
-
-
-
 -----------------------------------------------------------------------------'''
 
 class cnum(a, b):
-    self._a = 0
-    self._b = 0
+    self.a = 0
+    self.b = 0
     def __init__(self, a = 0, b = 0):
-        self._a = a
-        self._b = b
+        self.a = a
+        self.b = b
+
     def __abs__(self):
-        return sqrt(self._a + self_b)
-    def __add__( )
+        return sqrt(self.a + self.b)
+
+    def __add__(self, other):
+        if isinstance(other, cnum):
+            return cnum(self.a + other.a, self.b, other.b)
+        return cnum(self.a + other, self.b)
+
+    def __sub__(self, other):
+        if isinstance(other, cnum):
+            return cnum(self.a - other.a, self.b, other.b)
+        return cnum(self.a - other, self.b)
+
+
+    def __mul__(self, other):
+        if isinstance(other, cnum):
+            return cnum((self.a * other.a) - (self.b * other.b), 
+            (self.a * other.b) + (self.b * other.a))
+        return cnum(other * self.a, other * self.b)
+
+    def __pow__(self, other):
+        if isinstance(other, int) != True:
+            AssertionError("exponent must be an integer value")
+
+
+    def __truediv__(self, other)):
+        if isinstance(other, cnum):
+            return (abs(other) * abs(other)) * (self * other.compliment())
+        return 
+
+    def __floordiv__(self, other)):
+    def __lt__(self, other)):
+    def __le__(self, other)):
+    def __gr__(self, other)):
+    def __ge__(self, other)):
+    def __ne__(self, other)):
+    def polar():
+        pass
+    def compliment():
+        return cnum(self.a, -1 * self.b)
+
+
+
 
