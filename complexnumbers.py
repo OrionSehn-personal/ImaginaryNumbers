@@ -1,4 +1,4 @@
-from math import *
+import numpy as np
 
 '''-----------------------------------------------------------------------------
 Complex Number Module
@@ -29,15 +29,25 @@ compliment
 
 -----------------------------------------------------------------------------'''
 
-class cnum(a, b):
-    self.a = 0
-    self.b = 0
+class cnum():
+
     def __init__(self, a = 0, b = 0):
         self.a = a
         self.b = b
 
+    def __repr__(self):
+        return f'{self.a} + {self.b}i'
+
+    def compliment(self):
+        return cnum(self.a, -1 * self.b)
+
+
+    def argument(self):
+        return np.arctan(self.b / self.a)
+
+
     def __abs__(self):
-        return sqrt(self.a + self.b)
+        return np.sqrt(self.a**2 + self.b**2)
 
     def __add__(self, other):
         if isinstance(other, cnum):
@@ -59,24 +69,38 @@ class cnum(a, b):
     def __pow__(self, other):
         if isinstance(other, int) != True:
             AssertionError("exponent must be an integer value")
+        
 
-
-    def __truediv__(self, other)):
+    def __truediv__(self, other):
         if isinstance(other, cnum):
-            return (abs(other) * abs(other)) * (self * other.compliment())
+            return ((abs(other) * abs(other)) * (self * other.compliment()))
         return 
-
-    def __floordiv__(self, other)):
-    def __lt__(self, other)):
-    def __le__(self, other)):
-    def __gr__(self, other)):
-    def __ge__(self, other)):
-    def __ne__(self, other)):
+    
+    def __floordiv__(self, other):
+        pass
+    def __lt__(self, other):
+        pass
+    def __le__(self, other):
+        pass
+    def __gr__(self, other):
+        pass
+    def __ge__(self, other):
+        pass
+    def __ne__(self, other):
+        pass
     def polar():
         pass
-    def compliment():
-        return cnum(self.a, -1 * self.b)
 
+
+
+testnum = cnum(2, 1)
+testnum2 = cnum(1, 2)
+print(f'{testnum}\n'
+f'Compliment: {testnum.compliment()}\n'
+f'Absolute value: {abs(testnum)} \n'
+f'Sqrt(5) = {np.sqrt(5)}\n'
+f'Argument: {testnum.argument()}\n'
+f'arctan(1/2) = {np.arctan(1/2)}')
 
 
 
