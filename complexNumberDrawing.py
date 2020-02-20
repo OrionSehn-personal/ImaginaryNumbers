@@ -6,14 +6,12 @@ from complexnumbers import cnum
 '''---------------------------------------------------------------------------------
 A set of complex number functions, mostly serving as an introductory exploration 
 of what precicely a complex number is, how they can be used, and what they look like.
-
-
-
 ---------------------------------------------------------------------------------'''
 
-
-#plt.plot(np.random.rand(10))
-#plt.show()
+'''---------------------------------------------------------------------------------
+A function to output the coordinates of a point clicked on the screen, pulled
+from the documentaion of matplotlib returns none
+---------------------------------------------------------------------------------'''
 def clickdisplay():
     fig, ax = plt.subplots()
     ax.plot(np.random.rand(10))
@@ -27,6 +25,9 @@ def clickdisplay():
     plt.show()
 #clickdisplay()
 
+'''---------------------------------------------------------------------------------
+function to display the point clicked on the canvas
+---------------------------------------------------------------------------------'''
 def clickplot():
     fig, ax = plt.subplots()
     ax.margins(3, 2)
@@ -37,6 +38,11 @@ def clickplot():
     fig.canvas.mpl_connect('button_press_event', onclick)
     plt.show()    
 #clickplot()
+
+'''---------------------------------------------------------------------------------
+function to display the point clicked on the canvas, will clear canvas between each
+click event
+---------------------------------------------------------------------------------'''
 
 def singleclickplot():
     fig, ax = plt.subplots()
@@ -53,10 +59,17 @@ def singleclickplot():
     plt.show()    
 #singleclickplot()
 
+'''---------------------------------------------------------------------------------
+function which shows exactly how a complex number iterates through z = z^2 + c
+will show how the complex number behaves under iteration when being considered
+for being in the Mandelbrot set or not. 
 
+strangely will crash after about 20 or so iterations, I am not sure what causes
+this but it probably has to do with the event system, and clearing it at some 
+point. I could not find information on this. 
+---------------------------------------------------------------------------------'''
 
-
-def complexiteration():# strangely crashes after 20 or so clicks. inconsistent
+def complexiteration():# strangely crashes after 20 or so clicks.
     fig, ax = plt.subplots()
     plt.xlim(-2, 1)
     plt.ylim(-1, 1)
@@ -79,25 +92,21 @@ def complexiteration():# strangely crashes after 20 or so clicks. inconsistent
         x = np.array(ziterationsx)
         y = np.array(ziterationsy)
         plt.plot(x, y, linewidth = 1)
-
-        
-
-        #print(ziterations)
-
-        #print(z)
-
-
-
-        #plt.scatter([event.xdata], [event.ydata])
         plt.show()
 
     fig.canvas.mpl_connect('button_press_event', onclick)
     plt.show()    
 
 #complexiteration()
+'''---------------------------------------------------------------------------------
+helper function for generateMandelbrot(), which takes two numbers, an x and a y, 
+interprets them as a complex number x + yi and iterates it, to determine if it 
+is in fact in the Mandelbrot set. returns an rgb touple of the colour, black if
+it is in the set, and white - gray, depending on how many iterations it takes for
+the number to leave the stable region. 
+---------------------------------------------------------------------------------'''
 
-
-def inMandlebrot(x, y): # returns a rgb touple associated with the behaviour
+def inMandelbrot(x, y): # returns a rgb touple associated with the behaviour
         c = cnum(x, y) #of the number given to it. 
         z = cnum()
         numiterations = 0
@@ -108,8 +117,17 @@ def inMandlebrot(x, y): # returns a rgb touple associated with the behaviour
                 return (255 - numiterations, 255 - numiterations, 255 - numiterations)
         return (0, 0, 0)
 
+'''---------------------------------------------------------------------------------
+funciton which will produce a mandlebrot set:
+takes a starting point x0, y0, and an end point, x1, y1
+and a touple representing the x and y resolution of the mandlebrot set. 
 
-def generateMandlebrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)):
+because you can take different points, and different resolutions, you can view the
+entirty of the mandelbrot set, or you can zoom in on a region, by selecting 
+the values of the window size to be a certain value.
+---------------------------------------------------------------------------------'''
+
+def generateMandelbrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)):
     
     xvalues = np.linspace(x0, x1, resolution[0])
     yvalues = np.linspace(y0, y1, resolution[1])
@@ -117,7 +135,7 @@ def generateMandlebrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)
     for y in yvalues:
         ylist = []
         for x in xvalues:
-            ylist.append(inMandlebrot(x, y))
+            ylist.append(inMandelbrot(x, y))
         endlist.append(ylist)  
     endarray = np.array(endlist)
     plt.imshow(endarray)
@@ -128,7 +146,8 @@ def generateMandlebrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)
 
 
 
-generateMandlebrot()
+#generateMandelbrot()
 #Misiurewicz point 
-#generateMandlebrot(-0.1011 - 0.10, -0.1011 +0.10, 0.9563 - 0.10, 0.9563 +0.10)
-#generateMandlebrot(-0.1011 - 0.01, -0.1011 +0.01, 0.9563 - 0.01, 0.9563 +0.01)
+#generateMandelbrot(-0.1011 - 0.10, -0.1011 +0.10, 0.9563 - 0.10, 0.9563 +0.10)
+#generateMandelbrot(-0.1011 - 0.01, -0.1011 +0.01, 0.9563 - 0.01, 0.9563 +0.01)
+
