@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.lines as lines
+import matplotlib.colors as colors
 from complexnumbers import cnum
 
 '''---------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ def singleclickplot():
 
 
 
-def complexiteration():
+def complexiteration():# strangely crashes after 20 or so clicks. inconsistent
     fig, ax = plt.subplots()
     plt.xlim(-2, 1)
     plt.ylim(-1, 1)
@@ -94,4 +94,41 @@ def complexiteration():
     fig.canvas.mpl_connect('button_press_event', onclick)
     plt.show()    
 
-complexiteration()
+#complexiteration()
+
+
+def inMandlebrot(x, y): # returns a rgb touple associated with the behaviour
+        c = cnum(x, y) #of the number given to it. 
+        z = cnum()
+        numiterations = 0
+        for i in range(100):
+            z = (z*z)+ c
+            numiterations += 1 
+            if abs(z) >= 2:
+                return (255 - numiterations, 255 - numiterations, 255 - numiterations)
+        return (0, 0, 0)
+
+
+def generateMandlebrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)):
+    
+    xvalues = np.linspace(x0, x1, resolution[0])
+    yvalues = np.linspace(y0, y1, resolution[1])
+    endlist = []
+    for y in yvalues:
+        ylist = []
+        for x in xvalues:
+            ylist.append(inMandlebrot(x, y))
+        endlist.append(ylist)  
+    endarray = np.array(endlist)
+    plt.imshow(endarray)
+    plt.subplots_adjust(left = 0, right = 1, bottom = 0, top = 1)
+    plt.show()
+            
+
+
+
+
+#generateMandlebrot(resolution = (120, 90))
+#Misiurewicz point 
+#generateMandlebrot(-0.1011 - 0.10, -0.1011 +0.10, 0.9563 - 0.10, 0.9563 +0.10)
+generateMandlebrot(-0.1011 - 0.01, -0.1011 +0.01, 0.9563 - 0.01, 0.9563 +0.01)
