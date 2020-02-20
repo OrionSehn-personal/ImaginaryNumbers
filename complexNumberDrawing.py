@@ -128,7 +128,7 @@ def generateMandlebrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)
 
 
 
-#generateMandlebrot(resolution = (120, 90))
+generateMandlebrot()
 #Misiurewicz point 
 #generateMandlebrot(-0.1011 - 0.10, -0.1011 +0.10, 0.9563 - 0.10, 0.9563 +0.10)
-generateMandlebrot(-0.1011 - 0.01, -0.1011 +0.01, 0.9563 - 0.01, 0.9563 +0.01)
+#generateMandlebrot(-0.1011 - 0.01, -0.1011 +0.01, 0.9563 - 0.01, 0.9563 +0.01)
