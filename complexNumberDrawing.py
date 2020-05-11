@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from complexnumbers import cnum
+import time
 
 '''---------------------------------------------------------------------------------
 A set of complex number functions, mostly serving as an introductory exploration 
@@ -68,15 +69,19 @@ strangely will crash after about 20 or so iterations, I am not sure what causes
 this but it probably has to do with the event system, and clearing it at some 
 point. I could not find information on this. 
 ---------------------------------------------------------------------------------'''
-
-def complexiteration():# strangely crashes after 20 or so clicks.
-    img = plt.imread("Mandlebrot3000,2000cropped.png")
-    fig, ax = plt.subplots()
-    axes2 = plt.axes()
-    plt.xlim(-2, 1)
-    plt.ylim(-1, 1)
-    axes2.imshow(img, extent =[-2, 1, -1, 1])
-    #plt.grid()
+class Complexiteration: 
+    def __init__(self):
+        self._event = Complexiteration.onclick
+    def demonstrate(self):# strangely crashes after 20 or so clicks.
+        img = plt.imread("Mandlebrot3000,2000cropped.png")
+        fig, ax = plt.subplots()
+        axes2 = plt.axes()
+        plt.xlim(-2, 1)
+        plt.ylim(-1, 1)
+        axes2.imshow(img, extent =[-2, 1, -1, 1])
+        fig.canvas.mpl_connect('button_press_event', self._event)
+        plt.show()    
+        #plt.grid()
 
     def onclick(event):
         plt.clf()
@@ -97,13 +102,16 @@ def complexiteration():# strangely crashes after 20 or so clicks.
                 break
         x = np.array(ziterationsx)
         y = np.array(ziterationsy)
-        plt.plot(x, y, linewidth = 1)        
-        plt.show()
+        plt.plot(x, y, linewidth = 0.5, color = 'orange')        
+        event.canvas.draw()
+        
+        
 
-    fig.canvas.mpl_connect('button_press_event', onclick)
-    plt.show()    
+        #fig.canvas.mpl_connect('motion_notify_event', onclick)
 
-complexiteration()
+
+new = Complexiteration()
+new.demonstrate()
 '''---------------------------------------------------------------------------------
 helper function for generateMandelbrot(), which takes two numbers, an x and a y, 
 interprets them as a complex number x + yi and iterates it, to determine if it 
@@ -147,7 +155,7 @@ def generateMandelbrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)
     plt.imshow(endarray)
     plt.subplots_adjust(left = 0, right = 1, bottom = 0, top = 1)
     plt.show()
-            
+                
 
 
 
