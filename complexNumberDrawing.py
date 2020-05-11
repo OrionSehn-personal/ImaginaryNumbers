@@ -64,54 +64,48 @@ def singleclickplot():
 function which shows exactly how a complex number iterates through z = z^2 + c
 will show how the complex number behaves under iteration when being considered
 for being in the Mandelbrot set or not. 
-
-strangely will crash after about 20 or so iterations, I am not sure what causes
-this but it probably has to do with the event system, and clearing it at some 
-point. I could not find information on this. 
 ---------------------------------------------------------------------------------'''
-class Complexiteration: 
-    def __init__(self):
-        self._event = Complexiteration.onclick
-    def demonstrate(self):# strangely crashes after 20 or so clicks.
-        img = plt.imread("Mandlebrot3000,2000cropped.png")
-        fig, ax = plt.subplots()
-        axes2 = plt.axes()
-        plt.xlim(-2, 1)
-        plt.ylim(-1, 1)
-        axes2.imshow(img, extent =[-2, 1, -1, 1])
-        fig.canvas.mpl_connect('button_press_event', self._event)
-        plt.show()    
-        #plt.grid()
 
-    def onclick(event):
+def complexiteration():
+    hidemandle = False
+    
+    img = plt.imread("Mandlebrot3000,2000cropped.png")
+    fig, ax = plt.subplots()
+    axes2 = plt.axes()
+    plt.xlim(-2, 1)
+    plt.ylim(-1, 1)
+    axes2.imshow(img, extent =[-2, 1, -1, 1])
+    #plt.grid()
+
+    def runiteration(event):
         plt.clf()
         axes2 = plt.axes()
-        img = plt.imread("Mandlebrot3000,2000cropped.png")
         axes2.imshow(img, extent =[-2, 1, -1, 1])
         plt.xlim(-2, 1)
         plt.ylim(-1, 1)
+        if (event.xdata == None) or (event.ydata == None):
+            return
         c = cnum(event.xdata, event.ydata)
         z = cnum()
         ziterationsx = []
         ziterationsy = []
-        for i in range(100):
+        for i in range(80):
             ziterationsx.append(z.getA())
             ziterationsy.append(z.getB())
             z = (z*z)+ c
-            if abs(z) > 100:
+            if abs(z) > 50:
                 break
         x = np.array(ziterationsx)
         y = np.array(ziterationsy)
         plt.plot(x, y, linewidth = 0.5, color = 'orange')        
         event.canvas.draw()
-        
-        
+    
+    fig.canvas.mpl_connect('motion_notify_event', runiteration)
+    plt.show() 
 
-        #fig.canvas.mpl_connect('motion_notify_event', onclick)
+       
+complexiteration()
 
-
-new = Complexiteration()
-new.demonstrate()
 '''---------------------------------------------------------------------------------
 helper function for generateMandelbrot(), which takes two numbers, an x and a y, 
 interprets them as a complex number x + yi and iterates it, to determine if it 
