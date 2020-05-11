@@ -70,20 +70,26 @@ point. I could not find information on this.
 ---------------------------------------------------------------------------------'''
 
 def complexiteration():# strangely crashes after 20 or so clicks.
+    img = plt.imread("Mandlebrot3000,2000cropped.png")
     fig, ax = plt.subplots()
+    axes2 = plt.axes()
     plt.xlim(-2, 1)
     plt.ylim(-1, 1)
-    plt.grid()
+    axes2.imshow(img, extent =[-2, 1, -1, 1])
+    #plt.grid()
+
     def onclick(event):
-        plt.cla()
+        plt.clf()
+        axes2 = plt.axes()
+        img = plt.imread("Mandlebrot3000,2000cropped.png")
+        axes2.imshow(img, extent =[-2, 1, -1, 1])
         plt.xlim(-2, 1)
         plt.ylim(-1, 1)
-        plt.grid()
         c = cnum(event.xdata, event.ydata)
         z = cnum()
         ziterationsx = []
         ziterationsy = []
-        for i in range(50):
+        for i in range(100):
             ziterationsx.append(z.getA())
             ziterationsy.append(z.getB())
             z = (z*z)+ c
@@ -91,13 +97,13 @@ def complexiteration():# strangely crashes after 20 or so clicks.
                 break
         x = np.array(ziterationsx)
         y = np.array(ziterationsy)
-        plt.plot(x, y, linewidth = 1)
+        plt.plot(x, y, linewidth = 1)        
         plt.show()
 
     fig.canvas.mpl_connect('button_press_event', onclick)
     plt.show()    
 
-#complexiteration()
+complexiteration()
 '''---------------------------------------------------------------------------------
 helper function for generateMandelbrot(), which takes two numbers, an x and a y, 
 interprets them as a complex number x + yi and iterates it, to determine if it 
@@ -146,8 +152,8 @@ def generateMandelbrot(x0 = -2, x1 = 1, y0 = -1, y1 = 1, resolution = (480, 360)
 
 
 
-#generateMandelbrot()
+#generateMandelbrot(resolution = (3000,2000))
 #Misiurewicz point 
-#generateMandelbrot(-0.1011 - 0.10, -0.1011 +0.10, 0.9563 - 0.10, 0.9563 +0.10)
-#generateMandelbrot(-0.1011 - 0.01, -0.1011 +0.01, 0.9563 - 0.01, 0.9563 +0.01)
+#generateMandelbrot(-0.1011 - 0.10, -0.1011 +0.10, 0.9563 - 0.10, 0.9563 +0.10, resolution = (300,200))
+#generateMandelbrot(-0.1011 - 0.0001, -0.1011 +0.0001, 0.9563 - 0.0001, 0.9563 +0.0001, resolution = (300,200))
 
